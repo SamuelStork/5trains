@@ -4,6 +4,24 @@
 #include "pathfinder.h"
 
 int main(int argc, char *argv[]) {
-  findPath();
-  return 0;
+
+	char dictionary[10][25]{
+		"Amsterdam", //0
+		"Den Helder",
+		"Den Haag", 
+		"Eindhoven",
+		"Enschede", 
+		"Groningen",
+		"Leeuwarden",
+		"Maastricht"
+		"Meppel", 
+		"Nijnmegen",
+		"Utrecht", 
+		"Zwolle" 
+	};
+
+	int graph [9][9];
+
+	findPath();
+	return 0;
 }

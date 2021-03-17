@@ -13,7 +13,7 @@ typedef struct {
 
 typedef struct{
 	ListNode n;
-	int data;
+	*char data;
 	int visited;
 } Graph;
 
