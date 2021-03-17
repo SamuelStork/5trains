@@ -4,17 +4,34 @@
 #include <string.h>
 #include "pathfinder.h"
 
-void findPath(int graph[9][9], int v, int w){
-  int distance[12];
-  //S <- nodes(graph)
+ListNode * newNode(int weight, int des){
+	ListNode *newNode = malloc(sizeof(ListNode));
+	newNode->designation = des;
+	newNode->weight = weight;
+	newNode->next = NULL;
+	return newNode;
+}
+Graph * newGraph(int nodeNumber){
+	Graph *newGraph = malloc(sizeof(Graph));
+	newGraph->start = malloc(nodeNumber*sizeof(ListNode*));
+	for (int i = 0; i < nodeNumber; i++){
+		newGraph->start[i] = NULL;
+	}	
+	return newGraph;
+}
+void connect(Graph *Master, int start, int destination, int weight){
+	ListNode *edge; 
+	
+	edge = newNode(weight, destination);
+	edge->next = Master->start[start];
+	Master->start[start] = edge;
 
-  for(int i = 0; i < 12; i++){
-    if(i == v){
-      distance[i] = 0;
-    }
-    else{
-      distance[i] = -1;
-    }
-  }
+	edge = newNode(weight, start);
+	edge->next = Master->start[destination];
+	Master->start[destination] = edge;
+}
+
+
+void findPath(int v, int w){
 
 }
