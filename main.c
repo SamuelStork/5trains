@@ -3,6 +3,21 @@
 #include <assert.h> /* assert */
 #include "pathfinder.h"
 
+
+
+int getData(int *graph, int indexA, int indexB){
+	if (indexA < indexB){
+		return graph[indexA][indexB];
+	}
+	if(indexB < indexA){
+		return graph[indexB][indexA];		
+	}
+	if (indexB == indexA){
+		return 0;
+	}
+}
+
+
 int main(int argc, char *argv[]) {
 
 	char dictionary[12][25]{
