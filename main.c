@@ -1,6 +1,7 @@
 #include <stdio.h>  /* printf */
 #include <stdlib.h> /* free */
 #include <assert.h> /* assert */
+#include "heap.c"
 #include "pathfinder.h"
 
 

@@ -1,7 +1,10 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
 
+#define N 11
 
+int data[N];
+int visited[N];
 
 typedef struct ListNode *ListPointer;
 
@@ -11,13 +14,6 @@ typedef struct {
 	ListPointer next;
 } ListNode;
 
-typedef struct{
-	ListNode n;
-	*char data;
-	int visited;
-} Graph;
-
-Graph newGarph();
-void findPath();
+ListPointer neighbourList[N];
 
 #endif
