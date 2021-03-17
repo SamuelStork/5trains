@@ -35,8 +35,19 @@ int main(int argc, char *argv[]) {
 	graph[0][1] = 46;
 	graph[0][2] = 77;
 	graph[0][10] = 26;
-	graph[1][3] = 
-
-	findPath();
+	graph[1][3] = 86;
+	graph[3][7] = 63;
+	graph[3][10] = 55;
+	graph[4][11] = 47;
+	graph[5][6] = 34;
+	graph[5][8] = 40;
+	graph[6][8] = 49;
+	graph[7][9] = 111;
+	graph[8][11] = 15;
+	graph[9][11] = 77;
+	graph[10][11] = 51;
+	 
 	return 0;
+	
+	
 }
