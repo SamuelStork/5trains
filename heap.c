@@ -98,7 +98,8 @@ void swap(int *a, int *b) {
 }
 
 void freeHeap(Heap hp) {
-  free(hp.array);
+  free(hp.pseudo);
+  free(hp.node);
 }
 
 void printHeap(Heap hp) {

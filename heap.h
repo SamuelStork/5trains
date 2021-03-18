@@ -8,7 +8,7 @@
 
 typedef struct Heap {
   int *pseudo;
-  int *node
+  int *node;
   int front;
   int size;
 } Heap;
