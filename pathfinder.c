@@ -4,32 +4,48 @@
 #include <string.h>
 #include "pathfinder.h"
 
-struct ListNode *newNode(int weight, int des){
-	struct ListNode *newNode = malloc(sizeof(struct ListNode));
+ListPointer newNode(int weight, int des){
+	ListPointer newNode = malloc(sizeof(ListNode));
 	newNode->designation = des;
 	newNode->weight = weight;
 	newNode->next = NULL;
 	return newNode;
 }
-struct Graph *newGraph(int nodeNumber){
-	struct Graph *newGraph = malloc(sizeof(struct Graph));
-	newGraph->start = malloc(nodeNumber*sizeof(struct ListNode*));
+/*
+ListPointer newGraph(int nodeNumber){
+	ListPointer new = malloc(sizeof(ListNode));
+	new->start = malloc(nodeNumber*sizeof(struct ListNode*));
 	for (int i = 0; i < nodeNumber; i++){
 		newGraph->start[i] = NULL;
 	}
 	return newGraph;
 }
-void connect(struct Graph *master, int start, int destination, int weight){
-	struct ListNode *edge;
+*/
+void connect(ListPointer *master, int start, int destination, int weight){
+	ListPointer edge;
 
 	edge = newNode(weight, destination);
-	edge->next = master->start[start];
-	master->start[start] = edge;
+	edge->next = master[start];
+	master[start] = edge;
 
 	edge = newNode(weight, start);
-	edge->next = master->start[destination];
-	master->start[destination] = edge;
+  edge->next = master[destination];
+	master[destination] = edge;
+
 }
+
+void printGraph(ListPointer *graph){
+  for(int i = 0; i < 12; i++){
+    ListPointer temp = graph[i];
+    printf("\n Vertex %d:\n ", i);
+    while(temp != NULL){
+      printf("%d -> ", temp->designation);
+      temp = temp->next;
+    }
+    printf("\n");
+  }
+}
+
 
 /*
 void findPath(Graph g, int v, int w){

@@ -3,6 +3,7 @@
 #include <assert.h> /* assert */
 #include "heap.c"
 #include "pathfinder.h"
+#define N 12
 /*
 void nameScan(char **dictionary, int n){
 	int currentNumber;
@@ -44,8 +45,8 @@ int main(int argc, char *argv[]) {
 	printGraph(graph, nodeNumber);
 	*/
 
-	struct Graph *graph;
-	graph = newGraph(12);
+	ListPointer graph[N] = { 0 };
+
 	connect(graph, 0, 1, 46);
 	connect(graph, 0, 2, 77);
 	connect(graph, 0, 10, 26);
@@ -61,6 +62,8 @@ int main(int argc, char *argv[]) {
 	connect(graph, 8, 11, 15);
 	connect(graph, 9, 11, 77);
 	connect(graph, 10, 11, 51);
+
+	printGraph(graph);
 
 
 	return 0;
