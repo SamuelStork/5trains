@@ -3,7 +3,7 @@
 #include <assert.h> /* assert */
 #include "heap.c"
 #include "pathfinder.h"
-
+/*
 void nameScan(char **dictionary, int n){
 	int currentNumber;
 	int i = 0;
@@ -12,8 +12,9 @@ void nameScan(char **dictionary, int n){
 		i ++;
 	}
 }
-
+*/
 int main(int argc, char *argv[]) {
+	/*
 	int networkNumber;
 	int nodeNumber;
 	int connectionNumber;
@@ -41,8 +42,26 @@ int main(int argc, char *argv[]) {
 		connect(graph, start, destination, weight);
 	}
 	printGraph(graph, nodeNumber);
- 	
+	*/
+
+	struct Graph *graph;
+	graph = newGraph(12);
+	connect(graph, 0, 1, 46);
+	connect(graph, 0, 2, 77);
+	connect(graph, 0, 10, 26);
+	connect(graph, 1, 3, 89);
+	connect(graph, 3, 7, 63);
+	connect(graph, 3, 9, 55);
+	connect(graph, 3, 10, 47);
+	connect(graph, 4, 11, 50);
+	connect(graph, 5, 6, 34);
+	connect(graph, 5, 8, 49);
+	connect(graph, 6, 8, 40);
+	connect(graph, 7, 9, 111);
+	connect(graph, 8, 11, 15);
+	connect(graph, 9, 11, 77);
+	connect(graph, 10, 11, 51);
 
 
-	return 0;	
+	return 0;
 }

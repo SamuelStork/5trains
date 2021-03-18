@@ -4,34 +4,34 @@
 #include <string.h>
 #include "pathfinder.h"
 
-ListNode * newNode(int weight, int des){
-	ListNode *newNode = malloc(sizeof(ListNode));
+struct ListNode *newNode(int weight, int des){
+	struct ListNode *newNode = malloc(sizeof(struct ListNode));
 	newNode->designation = des;
 	newNode->weight = weight;
 	newNode->next = NULL;
 	return newNode;
 }
-Graph * newGraph(int nodeNumber){
-	Graph *newGraph = malloc(sizeof(Graph));
-	newGraph->start = malloc(nodeNumber*sizeof(ListNode*));
+struct Graph *newGraph(int nodeNumber){
+	struct Graph *newGraph = malloc(sizeof(struct Graph));
+	newGraph->start = malloc(nodeNumber*sizeof(struct ListNode*));
 	for (int i = 0; i < nodeNumber; i++){
 		newGraph->start[i] = NULL;
 	}
 	return newGraph;
 }
-void connect(Graph *Master, int start, int destination, int weight){
-	ListNode *edge;
+void connect(struct Graph *master, int start, int destination, int weight){
+	struct ListNode *edge;
 
 	edge = newNode(weight, destination);
-	edge->next = Master->start[start];
-	Master->start[start] = edge;
+	edge->next = master->start[start];
+	master->start[start] = edge;
 
 	edge = newNode(weight, start);
-	edge->next = Master->start[destination];
-	Master->start[destination] = edge;
+	edge->next = master->start[destination];
+	master->start[destination] = edge;
 }
 
-
+/*
 void findPath(Graph g, int v, int w){
   int pos[12];
   int u;
@@ -71,3 +71,4 @@ void findPath(Graph g, int v, int w){
     }
   }
 }
+*/
