@@ -1,19 +1,23 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
 
-#define N 11
 
-int data[N];
-int visited[N];
-
-typedef struct ListNode *ListPointer;
 
 typedef struct {
-	int node;
+	int designation;
 	int weight;
-	ListPointer next;
+	struct ListNode *next;
 } ListNode;
 
-ListPointer neighbourList[N];
+typedef struct {
+	ListNode **start;
+} Graph;
+
+
+ListNode *newNode(int weight, int des);
+Graph *newGraph(int nodeNumber);
+void connect(Graph *Master, int start, int destination, int weight);
+
+
 
 #endif

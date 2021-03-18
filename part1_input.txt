@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 1
+=======
+1 
+>>>>>>> 50d10179b97a50eaed1b28875019a397bb4edc6b
 12
 0 Amsterdam
 1 Den Haag
@@ -12,6 +16,7 @@
 9 Nijmegen
 10 Utrecht
 11 Zwolle
+15
 0 1 46
 0 2 77
 0 10 26
