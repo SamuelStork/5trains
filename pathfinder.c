@@ -4,7 +4,34 @@
 #include <string.h>
 #include "pathfinder.h"
 
-<<<<<<< HEAD
+ListNode * newNode(int weight, int des){
+	ListNode *newNode = malloc(sizeof(ListNode));
+	newNode->designation = des;
+	newNode->weight = weight;
+	newNode->next = NULL;
+	return newNode;
+}
+Graph * newGraph(int nodeNumber){
+	Graph *newGraph = malloc(sizeof(Graph));
+	newGraph->start = malloc(nodeNumber*sizeof(ListNode*));
+	for (int i = 0; i < nodeNumber; i++){
+		newGraph->start[i] = NULL;
+	}
+	return newGraph;
+}
+void connect(Graph *Master, int start, int destination, int weight){
+	ListNode *edge;
+
+	edge = newNode(weight, destination);
+	edge->next = Master->start[start];
+	Master->start[start] = edge;
+
+	edge = newNode(weight, start);
+	edge->next = Master->start[destination];
+	Master->start[destination] = edge;
+}
+
+
 void findPath(Graph g, int v, int w){
   int pos[12];
   int u;
@@ -22,37 +49,6 @@ void findPath(Graph g, int v, int w){
     }
     enqueue(distance[i], i, s, &pos);
   }
-=======
-ListNode * newNode(int weight, int des){
-	ListNode *newNode = malloc(sizeof(ListNode));
-	newNode->designation = des;
-	newNode->weight = weight;
-	newNode->next = NULL;
-	return newNode;
-}
-Graph * newGraph(int nodeNumber){
-	Graph *newGraph = malloc(sizeof(Graph));
-	newGraph->start = malloc(nodeNumber*sizeof(ListNode*));
-	for (int i = 0; i < nodeNumber; i++){
-		newGraph->start[i] = NULL;
-	}	
-	return newGraph;
-}
-void connect(Graph *Master, int start, int destination, int weight){
-	ListNode *edge; 
-	
-	edge = newNode(weight, destination);
-	edge->next = Master->start[start];
-	Master->start[start] = edge;
-
-	edge = newNode(weight, start);
-	edge->next = Master->start[destination];
-	Master->start[destination] = edge;
-}
-
-
-void findPath(int v, int w){
->>>>>>> 50d10179b97a50eaed1b28875019a397bb4edc6b
 
   while(!isEmptyHeap(s)){
     u = removeMin(s, &pos);
