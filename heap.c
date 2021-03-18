@@ -2,8 +2,10 @@
 
 Heap makeHeap() {
   Heap h;
-  h.array = malloc(1 * sizeof(int));
-  assert(h.array != NULL);
+  h.pseudo = malloc(1 * sizeof(int));
+  assert(h.pseudo != NULL);
+  h.node = malloc(1 * sizeof(int));
+  assert(h.node != NULL);
   h.front = 1;
   h.size = 1;
   return h;
@@ -20,59 +22,72 @@ void heapEmptyError() {
 
 void doubleHeapSize (Heap *hp) {
   int newSize = hp->size * 2;
-  hp->array = realloc(hp->array, newSize*sizeof(int));
+  hp->pseudo = realloc(hp->pseudo, newSize*sizeof(int));
+  hp->node = realloc(hp->node, newSize*sizeof(int));
   hp->size = newSize;
 }
 
-void upheap(Heap *hp, int n) {
+void upheap(Heap *hp, int n, int **pos) { //for reverse heap
   if (n == 1){
     return;
   }
 
-  if(hp->array[n] > hp->array[n / 2]){
-    swap(&(hp->array[n]), &(hp->array[n / 2]));
-    upheap(hp, n / 2);
+  if(hp->pseudo[n] < hp->pseudo[n / 2]){
+    int temp = (*pos[hp->node[n]]);
+    swap(&(hp->pseudo[n]), &(hp->pseudo[n / 2]));
+    swap(&(hp->node[n]), &(hp->node[n / 2]));
+    (*pos[hp->node[n]]) = (*pos[hp->node[n/2]]);
+    (*pos[hp->node[n/2]]) = temp;
+    upheap(hp, n / 2, pos);
   }
 }
 
-void downheap(Heap *hp, int n) {
+void downheap(Heap *hp, int n, int **pos) { //for reverse heap
   if(2 * n >= hp->front){
     return;
   }
 
-  int *lp = &(hp->array[2 * n]), *rp = &n;
+  int *lp = &(hp->pseudo[2 * n]), *rp = &n;
   if(2 * n + 1 >= hp->front){
     rp = lp;
   } else {
-    rp = &(hp->array[2 * n + 1]);
+    rp = &(hp->pseudo[2 * n + 1]);
   }
-  int bigger = (*lp >= *rp ? 2 * n : 2 * n + 1);
-  if(hp->array[n] < hp->array[bigger]){
-    swap(&(hp->array[n]), &(hp->array[bigger]));
-    downheap(hp, bigger);
+  int smaller = (*lp <= *rp ? 2 * n : 2 * n + 1);
+  if(hp->pseudo[n] > hp->pseudo[smaller]){
+    int temp = (*pos[hp->node[n]]);
+    swap(&(hp->pseudo[n]), &(hp->pseudo[smaller]));
+    swap(&(hp->node[n]), &(hp->node[smaller]));
+    (*pos[hp->node[n]]) = (*pos[hp->node[smaller]]);
+    (*pos[hp->node[smaller]]) = temp;
+    downheap(hp, smaller, pos);
   }
 }
 
 
-void enqueue(int n, Heap *hp) {
+void enqueue(int pseudo, int node, Heap *hp, int **pos) {
   int fr = hp->front;
   if (fr == hp->size) {
     doubleHeapSize(hp);
   }
-  hp->array[fr] = n;
-  upheap(hp, fr);
+  hp->pseudo[fr] = pseudo;
+  hp->node[fr] = node;
+  (*pos[hp->node[fr]]) = fr;
+  upheap(hp, fr, pos);
   hp->front = fr + 1;
 }
 
-int removeMax(Heap *hp) {
+int removeMin(Heap *hp, int **pos) {
   int n;
   if (isEmptyHeap(*hp)) {
     heapEmptyError();
   }
-  n = hp->array[1];
+  n = hp->node[1];
+  (*pos[hp->node[1]]) = -1;
   hp->front--;
-  hp->array[1] = hp->array[hp->front];
-  downheap(hp, 1);
+  hp->pseudo[1] = hp->pseudo[hp->front];
+  hp->node[1] = hp->node[hp->front];
+  downheap(hp, 1, pos);
   return n;
 }
 
@@ -89,7 +104,7 @@ void freeHeap(Heap hp) {
 void printHeap(Heap hp) {
 
   for (int idx = 1; idx < hp.front; ++idx) {
-    printf("%d ", hp.array[idx]);
+    printf("%d ", hp.pseudo[idx]);
   }
   printf("\n");
 }
