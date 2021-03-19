@@ -14,13 +14,13 @@ typedef struct Heap {
 } Heap;
 
 void doubleHeapSize (Heap *hp);
-int removeMin(Heap *hp, int **pos);
-void enqueue(int pseudo, int node, Heap *hp, int **pos);
+int removeMin(Heap *hp, int pos[]);
+void enqueue(int pseudo, int node, Heap *hp, int pos[]);
 void heapEmptyError();
 int isEmptyHeap(Heap h);
 Heap makeHeap();
-void upheap(Heap *hp, int n, int **pos);
-void downheap(Heap *hp, int n, int **pos);
+void upheap(Heap *hp, int n, int pos[]);
+void downheap(Heap *hp, int n, int pos[]);
 void swap(int *a, int *b);
 void freeHeap(Heap hp);
 void printHeap(Heap hp);
