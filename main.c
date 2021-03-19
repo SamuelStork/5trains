@@ -1,8 +1,11 @@
 #include <stdio.h>  /* printf */
-#include <stdlib.h> /* free */
+#include <stdlib.h> /* malloc, free */
 #include <assert.h> /* assert */
-#include "heap.c"
+#include <limits.h> /* INT_MAX */
+#include <string.h>
 #include "pathfinder.h"
+#include "heap.h"
+#include "LibStack.h"
 #define N 12
 /*
 void nameScan(char **dictionary, int n){
@@ -63,8 +66,12 @@ int main(int argc, char *argv[]) {
 	connect(graph, 9, 11, 77);
 	connect(graph, 10, 11, 51);
 
-	printGraph(graph);
+	findPath(graph, 5, 0);
 
+//	while(!isEmptyStack(path)){
+//		int temp = pop(&path);
+//		printf("%d\n", temp);
+//	}
 
 	return 0;
 }

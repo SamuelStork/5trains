@@ -33,11 +33,11 @@ void upheap(Heap *hp, int n, int pos[]) { //for reverse heap
   }
 
   if(hp->pseudo[n] < hp->pseudo[n / 2]){
-    int temp = pos[hp->node[n]];
     swap(&(hp->pseudo[n]), &(hp->pseudo[n / 2]));
     swap(&(hp->node[n]), &(hp->node[n / 2]));
-    pos[hp->node[n]] = pos[hp->node[n/2]];
-    pos[hp->node[n/2]] = temp;
+    swap(&(pos[hp->node[n]]), &(pos[hp->node[n/2]]));
+//    pos[hp->node[n]] = pos[hp->node[n/2]];
+//    pos[hp->node[n/2]] = temp;
     upheap(hp, n / 2, pos);
   }
 }
@@ -55,11 +55,12 @@ void downheap(Heap *hp, int n, int pos[]) { //for reverse heap
   }
   int smaller = (*lp <= *rp ? 2 * n : 2 * n + 1);
   if(hp->pseudo[n] > hp->pseudo[smaller]){
-    int temp = pos[hp->node[n]];
+//    int temp = pos[hp->node[n]];
     swap(&(hp->pseudo[n]), &(hp->pseudo[smaller]));
     swap(&(hp->node[n]), &(hp->node[smaller]));
-    pos[hp->node[n]] = pos[hp->node[smaller]];
-    pos[hp->node[smaller]] = temp;
+    swap(&(pos[hp->node[n]]), &(pos[hp->node[smaller]]));
+//    pos[hp->node[n]] = pos[hp->node[smaller]];
+//    pos[hp->node[smaller]] = temp;
     downheap(hp, smaller, pos);
   }
 }
@@ -105,7 +106,7 @@ void freeHeap(Heap hp) {
 void printHeap(Heap hp) {
 
   for (int idx = 1; idx < hp.front; ++idx) {
-    printf("%d ", hp.pseudo[idx]);
+    printf("%d-%d ", hp.pseudo[idx], hp.node[idx]);
   }
   printf("\n");
 }
