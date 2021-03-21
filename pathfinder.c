@@ -113,6 +113,7 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 				printf("%s\n", cities[s1]);
 			}
 			printf("%d\n", distance[w]);
+			free(pos);
 			freeHeap(s);
 			freeStack(path);
       return;
@@ -121,6 +122,7 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
       while(z != NULL){
 				if(distance[u] == INT_MAX){
 					printf("UNREACHABLE\n");
+					free(pos);
 					freeHeap(s);
 					return;
 				}
