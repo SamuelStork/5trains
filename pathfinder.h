@@ -11,7 +11,7 @@ typedef struct ListNode {
 } ListNode;
 
 ListPointer newNode(int weight, int des);
-//struct Graph *newGraph(int nodeNumber);
+void freeGraph(ListPointer *graph);
 void connect(ListPointer *master, int start, int destination, int weight);
 void disconnect(ListPointer *master, int start, int destination);
 void printGraph(ListPointer *graph);

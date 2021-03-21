@@ -121,6 +121,6 @@ int main(int argc, char *argv[]) {
 		}
 		findPath(graph, i1, i2, cities);
 	}
-
+	freeGraph(graph);
 	return 0;
 }

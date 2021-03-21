@@ -24,6 +24,19 @@ ListPointer newGraph(int nodeNumber){
 	return newGraph;
 }
 */
+
+void freeGraph(ListPointer *graph) {
+	for(int i = 0; i < 12; i++){
+		ListPointer g1;
+		while ( graph[i] != NULL ) {
+			g1 = graph[i]->next;
+			free(graph[i]);
+			graph[i] = g1;
+		}
+	}
+  return;
+}
+
 void connect(ListPointer *master, int start, int destination, int weight) {
 	ListPointer edge;
 
@@ -100,12 +113,15 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 				printf("%s\n", cities[s1]);
 			}
 			printf("%d\n", distance[w]);
+			freeHeap(s);
+			freeStack(path);
       return;
     } else {
       ListPointer z = graph[u];
       while(z != NULL){
 				if(distance[u] == INT_MAX){
 					printf("UNREACHABLE\n");
+					freeHeap(s);
 					return;
 				}
         if(distance[z->designation] > distance[u] + z->weight){
