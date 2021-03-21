@@ -13,8 +13,9 @@ typedef struct ListNode {
 ListPointer newNode(int weight, int des);
 //struct Graph *newGraph(int nodeNumber);
 void connect(ListPointer *master, int start, int destination, int weight);
+void disconnect(ListPointer *master, int start, int destination);
 void printGraph(ListPointer *graph);
-void findPath(ListPointer *graph, int v, int w);
+void findPath(ListPointer *graph, int v, int w, char cities[][12]);
 
 
 #endif

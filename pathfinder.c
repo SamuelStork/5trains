@@ -4,8 +4,8 @@
 #include <limits.h> /* INT_MAX */
 #include <string.h>
 #include "pathfinder.h"
-#include "heap.c"
-#include "LibStack.c"
+#include "heap.h"
+#include "LibStack.h"
 
 ListPointer newNode(int weight, int des){
 	ListPointer newNode = malloc(sizeof(ListNode));
@@ -24,7 +24,7 @@ ListPointer newGraph(int nodeNumber){
 	return newGraph;
 }
 */
-void connect(ListPointer *master, int start, int destination, int weight){
+void connect(ListPointer *master, int start, int destination, int weight) {
 	ListPointer edge;
 
 	edge = newNode(weight, destination);
@@ -37,6 +37,24 @@ void connect(ListPointer *master, int start, int destination, int weight){
 
 }
 
+void disconnect(ListPointer *master, int start, int destination) {
+	ListPointer temp = master[start];
+	ListPointer prev;
+
+	if(temp != NULL && temp->designation == destination){
+		master[start] = temp->next;
+		free(temp);
+		return;
+	}
+
+	while(temp != NULL && temp->designation != destination){
+		prev = temp;
+		temp = temp->next;
+	}
+
+	prev->next = temp->next;
+	free(temp);
+}
 void printGraph(ListPointer *graph){
   for(int i = 0; i < 12; i++){
     ListPointer temp = graph[i];
@@ -48,17 +66,16 @@ void printGraph(ListPointer *graph){
     printf("\n");
   }
 }
-
-void findPath(ListPointer *graph, int v, int w){
+//
+void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 	int n = 12;
   int *pos = malloc(n * sizeof(int));
   int u;
-//  int *path = calloc(n, sizeof(int));
   int distance[n];
 	int parent[n];
   Heap s = makeHeap();
 
-  for(int i = 0; i < 12; i++){
+  for(int i = 0; i < n; i++){
     if(i == v){
       distance[i] = 0;
     }
@@ -67,43 +84,38 @@ void findPath(ListPointer *graph, int v, int w){
     }
     enqueue(distance[i], i, &s, pos);
   }
-//
+
   while(!isEmptyHeap(s)){
     u = removeMin(&s, pos);
-//		printf("u = %d\n", u);
-//		printHeap(s);
     if(u == w){
+			Stack path = newStack(n);
       while(u != v){
-//				for(int i = 0; i < 3; i++){
-        printf("%d\n", u);
+				push(u, &path);
+//        printf("%d\n", u);
         u = parent[u];
       }
-			printf("%d\n", v);
-      printf("1\n");
+			push(v, &path);
+			while(!isEmptyStack(path)){
+				int s1 = pop(&path);
+				printf("%s\n", cities[s1]);
+			}
+			printf("%d\n", distance[w]);
       return;
     } else {
       ListPointer z = graph[u];
       while(z != NULL){
-//				printf("node = %d\n", z->designation);
-//				printf("3: %d\n", s.node[pos[11]]);
-//				printf("%d %d\n", pos[8], pos[11]);
+				if(distance[u] == INT_MAX){
+					printf("UNREACHABLE\n");
+					return;
+				}
         if(distance[z->designation] > distance[u] + z->weight){
-//					printf("old weight %d\n", distance[z->designation]);
-//					printf("new weight %d\n", (distance[u]+ z->weight));
           parent[z->designation] = u;
           distance[z->designation] = distance[u] + z->weight;
-//					printf("p1 = %d\n", s.pseudo[pos[z->designation]]);
-//					printf("modified weight %d\n", s.node[pos[z->designation]]);
 					s.pseudo[pos[z->designation]] = distance[u] + z->weight;
 					upheap(&s, (pos[z->designation]), pos);
-//					printf("3: %d\n", s.node[pos[11]]);
-//					printHeap(s);
-//					printf("p2 = %d\n", s.node[pos[z->designation]]);
         }
-//				printf("%d -> ", z->designation);
         z = z->next;
       }
-//			printf("\n");
     }
   }
 }

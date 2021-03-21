@@ -47,6 +47,20 @@ int main(int argc, char *argv[]) {
 	}
 	printGraph(graph, nodeNumber);
 	*/
+	char cities[N][N] = {
+		"Amsterdam",
+		"Den Haag",
+		"Den Helder",
+		"Eindhoven",
+		"Enschede",
+		"Groningen",
+		"Leeuwarden",
+		"Maastricht",
+		"Meppel",
+		"Nijmegen",
+		"Utrecht",
+		"Zwolle"
+	};
 
 	ListPointer graph[N] = { 0 };
 
@@ -66,12 +80,47 @@ int main(int argc, char *argv[]) {
 	connect(graph, 9, 11, 77);
 	connect(graph, 10, 11, 51);
 
-	findPath(graph, 5, 0);
+	int disruptions;
+	scanf("%d", &disruptions);
 
-//	while(!isEmptyStack(path)){
-//		int temp = pop(&path);
-//		printf("%d\n", temp);
-//	}
+	while(disruptions != 0){
+		char s1[N], s2[N];
+		int i1 = -1, i2 = -1;
+		scanf("%s", s1);
+		scanf("%s", s2);
+
+		for(int i = 0; i < N; i++){
+			if(strcmp(s1, cities[i]) == 0){
+				i1 = i;
+			} else if(strcmp(s2, cities[i]) == 0){
+				i2 = i;
+			}
+		}
+
+		disconnect(graph, i1, i2);
+		disconnect(graph, i2, i1);
+		disruptions--;
+	}
+
+	while(1){
+		char from[N], to[N];
+		int i1 = -1, i2 = -1;
+		scanf("%s", from);
+		scanf("%s", to);
+
+		if(from[0] == '!'){
+			break;
+		}
+
+		for(int i = 0; i < N; i++){
+			if(strcmp(from, cities[i]) == 0){
+				i1 = i;
+			} else if(strcmp(to, cities[i]) == 0){
+				i2 = i;
+			}
+		}
+		findPath(graph, i1, i2, cities);
+	}
 
 	return 0;
 }
