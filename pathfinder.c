@@ -68,6 +68,7 @@ void disconnect(ListPointer *master, int start, int destination) {
 	prev->next = temp->next;
 	free(temp);
 }
+/*
 void printGraph(ListPointer *graph){
   for(int i = 0; i < 12; i++){
     ListPointer temp = graph[i];
@@ -79,13 +80,14 @@ void printGraph(ListPointer *graph){
     printf("\n");
   }
 }
+*/
 //
 void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 	int n = 12;
-  int *pos = malloc(n * sizeof(int));
+  int pos[n];
   int u;
   int distance[n];
-	int parent[n];
+	int parent[12] = { 0 };
   Heap s = makeHeap();
 
   for(int i = 0; i < n; i++){
@@ -100,7 +102,15 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 
   while(!isEmptyHeap(s)){
     u = removeMin(&s, pos);
+//		printf("u = %d, distance = %d\n", u, distance[u]);
     if(u == w){
+
+			if(distance[u] == INT_MAX){
+				printf("UNREACHABLE\n");
+				freeHeap(s);
+				return;
+			}
+
 			Stack path = newStack(n);
       while(u != v){
 				push(u, &path);
@@ -113,7 +123,9 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 				printf("%s\n", cities[s1]);
 			}
 			printf("%d\n", distance[w]);
-			free(pos);
+//			free(pos);
+//			free(distance);
+//			free(parent);
 			freeHeap(s);
 			freeStack(path);
       return;
@@ -122,7 +134,9 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
       while(z != NULL){
 				if(distance[u] == INT_MAX){
 					printf("UNREACHABLE\n");
-					free(pos);
+//					free(pos);
+//					free(distance);
+//					free(parent);
 					freeHeap(s);
 					return;
 				}
@@ -132,6 +146,7 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 					s.pseudo[pos[z->designation]] = distance[u] + z->weight;
 					upheap(&s, (pos[z->designation]), pos);
         }
+//				printf("%d %d\n", z->designation, distance[z->designation]);
         z = z->next;
       }
     }
