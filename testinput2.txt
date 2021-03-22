@@ -1,6 +1,34 @@
-0
+4
 Den Haag
-Enschede
+Amsterdam
+Utrecht
+Eindhoven
+Eindhoven
+Nijmegen
+Zwolle
+Nijmegen
+Utrecht
 Groningen
 Amsterdam
+Nijmegen
+Den Helder
+Maastricht
+Leeuwarden
+Enschede
+Eindhoven
+Utrecht
+Den Haag
+Amsterdam
+Den Haag
+Den Helder
+Eindhoven
+Eindhoven
+Enschede
+Den Haag
+Zwolle
+Groningen
+Leeuwarden
+Maastricht
+Eindhoven
+Den Helder
 !
