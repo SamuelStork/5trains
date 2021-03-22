@@ -86,8 +86,10 @@ int main(int argc, char *argv[]) {
 	while(disruptions != 0){
 		char s1[N], s2[N];
 		int i1 = -1, i2 = -1;
-		scanf("%s", s1);
-		scanf("%s", s2);
+		getchar();
+		scanf("%[^\n]s", s1);
+		getchar();
+		scanf("%[^\n]s", s2);
 
 		for(int i = 0; i < N; i++){
 			if(strcmp(s1, cities[i]) == 0){
@@ -105,8 +107,10 @@ int main(int argc, char *argv[]) {
 	while(1){
 		char from[N], to[N];
 		int i1 = -1, i2 = -1;
-		scanf("%s", from);
-		scanf("%s", to);
+		getchar();
+		scanf("%[^\n]s", from);
+		getchar();
+		scanf("%[^\n]s", to);
 
 		if(from[0] == '!'){
 			break;
