@@ -77,7 +77,7 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
   int u;
   int distance[n];
 	int parent[n];
-	memset(parent, 0, n*sizeof(int));
+//	memset(parent, 0, n*sizeof(int));
   Heap s = makeHeap();
 
   for(int i = 0; i < n; i++){
@@ -125,7 +125,7 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
         if(distance[z->designation] > distance[u] + z->weight){
           parent[z->designation] = u;
           distance[z->designation] = distance[u] + z->weight;
-					s.pseudo[pos[z->designation]] = distance[u] + z->weight;
+					s.pseudo[pos[z->designation]] = distance[z->designation];
 					upheap(&s, (pos[z->designation]), pos);
         }
         z = z->next;

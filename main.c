@@ -83,27 +83,6 @@ int main(int argc, char *argv[]) {
 	int disruptions;
 	scanf("%d", &disruptions);
 
-	while(disruptions != 0){
-		char s1[N], s2[N];
-		int i1 = -1, i2 = -1;
-		getchar();
-		scanf("%[^\n]s", s1);
-		getchar();
-		scanf("%[^\n]s", s2);
-
-		for(int i = 0; i < N; i++){
-			if(strcmp(s1, cities[i]) == 0){
-				i1 = i;
-			} else if(strcmp(s2, cities[i]) == 0){
-				i2 = i;
-			}
-		}
-
-		disconnect(graph, i1, i2);
-		disconnect(graph, i2, i1);
-		disruptions--;
-	}
-
 	while(1){
 		char from[N], to[N];
 		int i1 = -1, i2 = -1;
@@ -123,7 +102,13 @@ int main(int argc, char *argv[]) {
 				i2 = i;
 			}
 		}
-		findPath(graph, i1, i2, cities);
+		if(disruptions){
+			disconnect(graph, i1, i2);
+			disconnect(graph, i2, i1);
+			disruptions--;
+		} else{
+			findPath(graph, i1, i2, cities);
+		}
 	}
 	freeGraph(graph);
 	return 0;

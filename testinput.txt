@@ -1,12 +1,6 @@
-2
+1
 Utrecht
-Zwolle
-Enschede
-Zwolle
-Amsterdam
-Groningen
-Enschede
 Eindhoven
-Leeuwarden
-Eindhoven
+Utrecht
+Nijmegen
 !
