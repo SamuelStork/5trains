@@ -7,6 +7,7 @@
 #include "heap.h"
 
 int main(int argc, char *argv[]) {
+	// Set predefined amount of nodes & create the city dictionary
 	int n = 12;
 	char *cities[n];
 		cities[0] = "Amsterdam";
@@ -22,8 +23,8 @@ int main(int argc, char *argv[]) {
 		cities[10] = "Utrecht";
 		cities[11] = "Zwolle";
 
+	// Create and initialize Graph & add predefined connections
 	ListPointer graph[n];
-
 	for(int i = 0; i < n; i++){
 		graph[i] = NULL;
 	}
@@ -44,9 +45,11 @@ int main(int argc, char *argv[]) {
 	connect(graph, 9, 11, 77);
 	connect(graph, 10, 11, 51);
 
+	// Scan the number of disruptions
 	int disruptions;
 	scanf("%d", &disruptions);
 
+	// While loop to receive input
 	while(1){
 		char from[n], to[n];
 		int i1 = -1, i2 = -1;
@@ -55,10 +58,12 @@ int main(int argc, char *argv[]) {
 		getchar();
 		scanf("%[^\n]s", to);
 
+		// If statement for loop termination
 		if(from[0] == '!'){
 			break;
 		}
 
+		// Compare scanned input with dictionary
 		for(int i = 0; i < n; i++){
 			if(strcmp(from, cities[i]) == 0){
 				i1 = i;
@@ -66,6 +71,7 @@ int main(int argc, char *argv[]) {
 				i2 = i;
 			}
 		}
+		// Remove connections or find shortest path
 		if(disruptions){
 			disconnect(graph, i1, i2);
 			disconnect(graph, i2, i1);

@@ -5,8 +5,8 @@
 #include <string.h>
 #include "pathfinder.h"
 #include "heap.h"
-//#include "LibStack.h"
 
+// newNode creates a new graph node
 ListPointer newNode(int weight, int des){
 	ListPointer newNode = malloc(sizeof(ListNode));
 	newNode->designation = des;
@@ -15,6 +15,7 @@ ListPointer newNode(int weight, int des){
 	return newNode;
 }
 
+// freeGraph frees memory allocated for graph
 void freeGraph(ListPointer *graph) {
 	for(int i = 0; i < 12; i++){
 		ListPointer g1;
@@ -27,6 +28,7 @@ void freeGraph(ListPointer *graph) {
   return;
 }
 
+// Create connections between cities (has to be done both ways)
 void connect(ListPointer *master, int start, int destination, int weight) {
 	ListPointer edge;
 
@@ -39,6 +41,7 @@ void connect(ListPointer *master, int start, int destination, int weight) {
 	master[destination] = edge;
 }
 
+// Remove connection between cities
 void disconnect(ListPointer *master, int start, int destination) {
 	ListPointer temp = master[start];
 	ListPointer prev;
@@ -58,6 +61,7 @@ void disconnect(ListPointer *master, int start, int destination) {
 	free(temp);
 }
 
+// Print shortest path
 void printPath(int u, int v, int parent[], char **cities){
 	if(u == v){
 		printf("%s\n", cities[u]);
@@ -68,15 +72,14 @@ void printPath(int u, int v, int parent[], char **cities){
 	}
 }
 
+// findPath function makes use of the Djikstra algorithm
 void findPath(ListPointer *graph, int v, int w, char **cities){
-	int n = 12;
-  int pos[n];
-  int u;
-  int distance[n];
-	int parent[n];
-//	memset(parent, 0, n*sizeof(int));
-  Heap s = makeHeap();
+	int n = 12; // Predefined number of cities
+  int u; // Current node
+  int distance[n], parent[n];	// Arrays to store the pseudo distance & parent of current node
+  Heap s = makeHeap(); // Inverse heap represents the to do list
 
+	// Set pseudo distance of first node to 0, all other nodes to infinity and add nodes to heap
   for(int i = 0; i < n; i++){
     if(i == v){
       distance[i] = 0;
@@ -84,13 +87,16 @@ void findPath(ListPointer *graph, int v, int w, char **cities){
     else{
       distance[i] = INT_MAX;
     }
-    enqueue(distance[i], i, &s, pos);
+    enqueue(distance[i], i, &s);
   }
 
+	// Iterate through to do ListPointer
   while(!isEmptyHeap(s)){
-    u = removeMin(&s, pos);
-    if(u == w){
+    u = removeMin(&s); // Node with the shortest pseudo distance
 
+		// If last node is reached
+    if(u == w){
+			// Check if goal is reachable
 			if(distance[u] == INT_MAX){
 				printf("UNREACHABLE\n");
 				freeHeap(s);
@@ -100,24 +106,30 @@ void findPath(ListPointer *graph, int v, int w, char **cities){
 			printf("%d\n", distance[w]);
 			freeHeap(s);
 			return;
-    } else {
+    } else { //Go through all other nodes connected to u
       ListPointer z = graph[u];
       while(z != NULL){
+				// Check if goal is reachable
 				if(distance[u] == INT_MAX){
 					printf("UNREACHABLE\n");
 					freeHeap(s);
 					return;
 				}
+				// Relaxation step: modifies pseudo distance if shorter one is found
         if(distance[z->designation] > distance[u] + z->weight){
           parent[z->designation] = u;
           distance[z->designation] = distance[u] + z->weight;
-					s.pseudo[pos[z->designation]] = distance[z->designation];
-					upheap(&s, (pos[z->designation]), pos);
+					// Modifies pseudo distance in heap
+					for(int i = 1; i < n; i++){
+						if(s.node[i] == z->designation){
+							s.pseudo[i] = distance[z->designation];
+							upheap(&s, i);
+							break;
+						}
+					}
         }
         z = z->next;
       }
     }
   }
-	printf("UNREACHABLE\n");
-	freeHeap(s);
 }
