@@ -1,6 +1,6 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
-#include "LibStack.h"
+//#include "LibStack.h"
 
 typedef struct ListNode *ListPointer;
 
@@ -15,7 +15,8 @@ void freeGraph(ListPointer *graph);
 void connect(ListPointer *master, int start, int destination, int weight);
 void disconnect(ListPointer *master, int start, int destination);
 void printGraph(ListPointer *graph);
-void findPath(ListPointer *graph, int v, int w, char cities[][12]);
+void findPath(ListPointer *graph, int v, int w, char **cities);
+void printPath(int u, int v, int parent[], char **cities);
 
 
 #endif

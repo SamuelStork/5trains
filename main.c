@@ -5,64 +5,28 @@
 #include <string.h>
 #include "pathfinder.h"
 #include "heap.h"
-#include "LibStack.h"
-#define N 12
-/*
-void nameScan(char **dictionary, int n){
-	int currentNumber;
-	int i = 0;
-	while (n > i){
-		scanf("%d %s", &currentNumber, dictionary[i]);
-		i ++;
-	}
-}
-*/
+
 int main(int argc, char *argv[]) {
-	/*
-	int networkNumber;
-	int nodeNumber;
-	int connectionNumber;
+	int n = 12;
+	char *cities[n];
+		cities[0] = "Amsterdam";
+		cities[1] = "Den Haag";
+		cities[2] = "Den Helder";
+		cities[3] = "Eindhoven";
+		cities[4] = "Enschede";
+		cities[5] = "Groningen";
+		cities[6] = "Leeuwarden";
+		cities[7] = "Maastricht";
+		cities[8] = "Meppel";
+		cities[9] = "Nijmegen";
+		cities[10] = "Utrecht";
+		cities[11] = "Zwolle";
 
-	int i = 0;
+	ListPointer graph[n];
 
-	scanf("%d", &networkNumber);
-	scanf("%d", &nodeNumber);
-	char **dictionary = malloc(nodeNumber * sizeof(char *));
-	dictionary[0] = malloc(nodeNumber * 35);
-	for (i = 1; i < nodeNumber; i++){
-		dictionary[i] = dictionary[0] + i*35;
+	for(int i = 0; i < n; i++){
+		graph[i] = NULL;
 	}
-	printf("dictionary created");
-	nameScan(dictionary, nodeNumber);
-	Graph *graph;
-	graph = newGraph(nodeNumber);
-
-	scanf("%d", &connectionNumber);
-
-	int start, destination, weight;
-
-	for (i = 0; i < connectionNumber; i++){
-		scanf("%d %d %d", &start, &destination, &weight);
-		connect(graph, start, destination, weight);
-	}
-	printGraph(graph, nodeNumber);
-	*/
-	char cities[N][N] = {
-		"Amsterdam",
-		"Den Haag",
-		"Den Helder",
-		"Eindhoven",
-		"Enschede",
-		"Groningen",
-		"Leeuwarden",
-		"Maastricht",
-		"Meppel",
-		"Nijmegen",
-		"Utrecht",
-		"Zwolle"
-	};
-
-	ListPointer graph[N] = { 0 };
 
 	connect(graph, 0, 1, 46);
 	connect(graph, 0, 2, 77);
@@ -84,7 +48,7 @@ int main(int argc, char *argv[]) {
 	scanf("%d", &disruptions);
 
 	while(1){
-		char from[N], to[N];
+		char from[n], to[n];
 		int i1 = -1, i2 = -1;
 		getchar();
 		scanf("%[^\n]s", from);
@@ -95,7 +59,7 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 
-		for(int i = 0; i < N; i++){
+		for(int i = 0; i < n; i++){
 			if(strcmp(from, cities[i]) == 0){
 				i1 = i;
 			} else if(strcmp(to, cities[i]) == 0){

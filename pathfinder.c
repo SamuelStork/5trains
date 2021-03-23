@@ -5,7 +5,7 @@
 #include <string.h>
 #include "pathfinder.h"
 #include "heap.h"
-#include "LibStack.h"
+//#include "LibStack.h"
 
 ListPointer newNode(int weight, int des){
 	ListPointer newNode = malloc(sizeof(ListNode));
@@ -57,21 +57,18 @@ void disconnect(ListPointer *master, int start, int destination) {
 	prev->next = temp->next;
 	free(temp);
 }
-/*
-void printGraph(ListPointer *graph){
-  for(int i = 0; i < 12; i++){
-    ListPointer temp = graph[i];
-    printf("\n Vertex %d:\n ", i);
-    while(temp != NULL){
-      printf("%d -> ", temp->designation);
-      temp = temp->next;
-    }
-    printf("\n");
-  }
-}
-*/
 
-void findPath(ListPointer *graph, int v, int w, char cities[][12]){
+void printPath(int u, int v, int parent[], char **cities){
+	if(u == v){
+		printf("%s\n", cities[u]);
+	}
+	else{
+		printPath(parent[u], v, parent, cities);
+		printf("%s\n", cities[u]);
+	}
+}
+
+void findPath(ListPointer *graph, int v, int w, char **cities){
 	int n = 12;
   int pos[n];
   int u;
@@ -99,21 +96,10 @@ void findPath(ListPointer *graph, int v, int w, char cities[][12]){
 				freeHeap(s);
 				return;
 			}
-
-			Stack path = newStack(n);
-      while(u != v){
-				push(u, &path);
-        u = parent[u];
-      }
-			push(v, &path);
-			while(!isEmptyStack(path)){
-				int s1 = pop(&path);
-				printf("%s\n", cities[s1]);
-			}
+			printPath(u, v, parent, cities);
 			printf("%d\n", distance[w]);
 			freeHeap(s);
-			freeStack(path);
-      return;
+			return;
     } else {
       ListPointer z = graph[u];
       while(z != NULL){
