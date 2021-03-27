@@ -1,8 +1,4 @@
-2
-Utrecht
-Zwolle
-Enschede
-Zwolle
+0
 Amsterdam
 Groningen
 !

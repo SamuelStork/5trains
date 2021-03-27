@@ -3,6 +3,7 @@
 #include <assert.h> /* assert */
 #include <limits.h> /* INT_MAX */
 #include <string.h>
+#include <math.h>
 #include "pathfinder.h"
 #include "heap.h"
 
@@ -22,6 +23,9 @@ int main(int argc, char *argv[]) {
 		cities[9] = "Nijmegen";
 		cities[10] = "Utrecht";
 		cities[11] = "Zwolle";
+
+	long double x[12] = {4.9005805, 4.3113461, 4.7606663, 5.4795265, 6.8897881, 6.5641028, 5.7929849, 5.7052501, 6.1979382, 5.8530913, 5.1098210,  6.0912373};
+	long double y[12] = {52.3789010, 52.0799838, 52.9568469, 51.4429623, 52.2223649, 53.2109237, 53.1964772, 50.8501783, 52.6919049, 51.8431362, 52.0893925, 52.5050086};
 
 	// Create and initialize Graph & add predefined connections
 	ListPointer graph[n];
@@ -77,7 +81,7 @@ int main(int argc, char *argv[]) {
 			disconnect(graph, i2, i1);
 			disruptions--;
 		} else{
-			findPath(graph, i1, i2, cities);
+			findPath(graph, i1, i2, cities, x, y);
 		}
 	}
 	freeGraph(graph);

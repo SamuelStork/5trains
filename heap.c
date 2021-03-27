@@ -2,7 +2,7 @@
 
 Heap makeHeap() {
   Heap h;
-  h.pseudo = malloc(1 * sizeof(int));
+  h.pseudo = malloc(1 * sizeof(long double));
   assert(h.pseudo != NULL);
   h.node = malloc(1 * sizeof(int));
   assert(h.node != NULL);
@@ -22,7 +22,7 @@ void heapEmptyError() {
 
 void doubleHeapSize (Heap *hp) {
   int newSize = hp->size * 2;
-  hp->pseudo = realloc(hp->pseudo, newSize*sizeof(int));
+  hp->pseudo = realloc(hp->pseudo, newSize*sizeof(long double));
   hp->node = realloc(hp->node, newSize*sizeof(int));
   hp->size = newSize;
 }
@@ -33,7 +33,7 @@ void upheap(Heap *hp, int n) { //for reverse heap
   }
 
   if(hp->pseudo[n] < hp->pseudo[n / 2]){
-    swap(&(hp->pseudo[n]), &(hp->pseudo[n / 2]));
+    swapld(&(hp->pseudo[n]), &(hp->pseudo[n / 2]));
     swap(&(hp->node[n]), &(hp->node[n / 2]));
     upheap(hp, n / 2);
   }
@@ -43,8 +43,9 @@ void downheap(Heap *hp, int n) { //for reverse heap
   if(2 * n >= hp->front){
     return;
   }
+  long double b = (long double) n;
 
-  int *lp = &(hp->pseudo[2 * n]), *rp = &n;
+  long double *lp = &(hp->pseudo[2 * n]), *rp = &b;
   if(2 * n + 1 >= hp->front){
     rp = lp;
   } else {
@@ -52,14 +53,14 @@ void downheap(Heap *hp, int n) { //for reverse heap
   }
   int smaller = (*lp <= *rp ? 2 * n : 2 * n + 1);
   if(hp->pseudo[n] > hp->pseudo[smaller]){
-    swap(&(hp->pseudo[n]), &(hp->pseudo[smaller]));
+    swapld(&(hp->pseudo[n]), &(hp->pseudo[smaller]));
     swap(&(hp->node[n]), &(hp->node[smaller]));
     downheap(hp, smaller);
   }
 }
 
 
-void enqueue(int pseudo, int node, Heap *hp) {
+void enqueue(long double pseudo, int node, Heap *hp) {
   int fr = hp->front;
   if (fr == hp->size) {
     doubleHeapSize(hp);
@@ -89,6 +90,12 @@ void swap(int *a, int *b) {
   *b = temp;
 }
 
+void swapld(long double *a, long double *b) {
+  long double temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
 void freeHeap(Heap hp) {
   free(hp.pseudo);
   free(hp.node);
@@ -97,7 +104,7 @@ void freeHeap(Heap hp) {
 void printHeap(Heap hp) {
 
   for (int idx = 1; idx < hp.front; ++idx) {
-    printf("%d-%d ", hp.pseudo[idx], hp.node[idx]);
+    printf("%Lf-%d ", hp.pseudo[idx], hp.node[idx]);
   }
   printf("\n");
 }
